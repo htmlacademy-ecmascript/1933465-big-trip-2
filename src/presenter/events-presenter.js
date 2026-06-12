@@ -15,6 +15,10 @@ export default class EventsPresenter {
   }
 
   init() {
+    this.render();
+  }
+
+  render() {
     render(new SortView(), this.eventsContainer);
     render(this.eventsListComponent, this.eventsContainer);
     render(new EditPointView(), this.eventsListComponent.getElement());
