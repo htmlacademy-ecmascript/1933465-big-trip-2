@@ -1,6 +1,4 @@
-import { createElement } from '../render.js';
-
-function createEventTemplate() {
+export function createEventTemplate() {
   return `<li class="trip-events__item">
               <div class="event">
                 <time class="event__date" datetime="2019-03-18">MAR 18</time>
@@ -38,21 +36,4 @@ function createEventTemplate() {
                 </button>
               </div>
             </li>`;
-}
-
-export default class EventView {
-  getTemplate() {
-    return createEventTemplate();
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
-  }
 }
