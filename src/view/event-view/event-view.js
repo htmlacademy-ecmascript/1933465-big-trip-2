@@ -2,8 +2,13 @@ import { createElement } from '../../render.js';
 import { createEventTemplate } from './event-template.js';
 
 export default class EventView {
+
+  constructor({event}) {
+    this.event = event;
+  }
+
   getTemplate() {
-    return createEventTemplate();
+    return createEventTemplate(this.event);
   }
 
   getElement() {

@@ -207,8 +207,8 @@ const mockOffers = [
 
 export const getOffers = () => mockOffers;
 
-export const getOffersByType = (type) => mockOffers.find((offer) => offer.type === type);
+export const getOffersByType = (type) => mockOffers.find((offer) => offer.type === type).offers;
 
-export const getOffersById = (id) => mockOffers.find((offer) => offer.id === id);
+export const getOfferByTypeAndId = (type, id) => getOffersByType(type).find((offer) => offer.id === id);
 
 
