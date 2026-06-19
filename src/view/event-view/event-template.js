@@ -9,17 +9,17 @@ function createOfferTemplate(offer) {
                   </li>`;
 }
 
-export function createEventTemplate(event) {
-  const { type, destination: { name: destination }, basePrice, offers, isFavorite, dateFrom, dateTo } = event;
+export function createEventTemplate(point, destination, offers) {
+  const { type, basePrice, isFavorite, dateFrom, dateTo } = point;
   const favoriteClass = isFavorite ? 'event__favorite-btn--active' : '';
-  const offersElement = offers.length ? `<ul class="event__selected-offers">${event.offers.map(createOfferTemplate).join('')}</ul>` : '';
+  const offersElement = offers.length ? `<ul class="event__selected-offers">${offers.map(createOfferTemplate).join('')}</ul>` : '';
   return `<li class="trip-events__item">
               <div class="event">
                 <time class="event__date" datetime="2019-03-18">${humanizeDate(dateFrom)}</time>
                 <div class="event__type">
                   <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
                 </div>
-                <h3 class="event__title">${type} ${destination}</h3>
+                <h3 class="event__title">${type} ${destination.title}</h3>
                 <div class="event__schedule">
                   <p class="event__time">
                     <time class="event__start-time" datetime="${dateFrom}">${humanizeTime(dateFrom)}</time>

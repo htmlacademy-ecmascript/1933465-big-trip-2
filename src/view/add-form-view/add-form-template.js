@@ -12,53 +12,46 @@ function createOfferTemplate(offer, id, isChecked = false) {
                       </div>`;
 }
 
-function createPhotoTemplate({ src, description }) {
-  return `<img class="event__photo" src="${src}" alt="${description}">`;
-}
-
 function createPhotosTemplate(photos) {
   if (!photos.length) {
     return '';
   }
   return `<div class="event__photos-container"><div class="event__photos-tape">
-  ${photos.map((photo) => createPhotoTemplate(photo)).join('')}
+  ${photos.map((photo) => `<img class="event__photo" src="${photo.src}" alt="${photo.description}">`).join('')}
   </div></div>`;
 }
 
-function createOffersTemplate(activeOffers, offers, id) {
-  if (!offers.length) {
+function createOffersTemplate(offers, allOffers, id) {
+  if (!allOffers.length) {
     return '';
   }
   return `<section class="event__section  event__section--offers">
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
                      <div class="event__available-offers">
-                     ${offers.map((offer) => {
-    const isChecked = activeOffers.some((currentOffer) => currentOffer.id === offer.id);
+                     ${allOffers.map((offer) => {
+    const isChecked = offers.some((currentOffer) => currentOffer.id === offer.id);
     return createOfferTemplate(offer, id, isChecked);
   }).join('')}
                      </div>
                   </section>`;
 }
 
-function createEventTypeTemplate(type, id) {
+function createPointTypeTemplate(type, id) {
   return `<div class="event__type-item">
                           <input id="event-type-${type}-${id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
                           <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-${id}">${type[0].toUpperCase() + type.slice(1)}</label>
                         </div>`;
 }
 
-function createDestinationTemlate(destination) {
-  return `<option value="${destination}"></option>`;
-}
-
-export function createFormTemplate({event, offers, types, destinations}, hasDescriptionBlock, showDescription, isEdit) {
-  const { destination: { pictures: photos, description, name: destination }, type, basePrice, id } = event;
-  const resetButtonText = isEdit ? 'Delete' : 'Cancel';
-  const offersElement = createOffersTemplate(event.offers, offers, id);
-  const picturesElement = createPhotosTemplate(photos);
+export function createEditFormTemplate({point, destination, offers, allOffers, types, destinations}) {
+  const { type, basePrice, id, dateTo, dateFrom } = point;
+  const { name, pictures, description } = destination;
+  const offersElement = createOffersTemplate(offers, allOffers, id);
+  const picturesElement = createPhotosTemplate(pictures);
   const descriptionElement = description.length ? `<p class="event__destination-description">${description}</p>` : '';
-  const eventTypesElement = types.map((innerType) => createEventTypeTemplate(innerType)).join('');
-  const destinationsElement = destinations.map((innerDestination) => createDestinationTemlate(innerDestination)).join('');
+  const hasDescriptionBlock = picturesElement.length || descriptionElement.length;
+  const pointTypesElement = types.map((innerType) => createPointTypeTemplate(innerType)).join('');
+  const destinationsElement = destinations.map((innerDestination) => `<option value="${innerDestination.name}"></option>`).join('');
 
   return `<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
@@ -73,7 +66,7 @@ export function createFormTemplate({event, offers, types, destinations}, hasDesc
                     <div class="event__type-list">
                       <fieldset class="event__type-group">
                         <legend class="visually-hidden">Event type</legend>
-                        ${eventTypesElement}
+                        ${pointTypesElement}
                       </fieldset>
                     </div>
                   </div>
@@ -82,7 +75,7 @@ export function createFormTemplate({event, offers, types, destinations}, hasDesc
                     <label class="event__label  event__type-output" for="event-destination-${id}">
                       ${type}
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-${id}" type="text" name="event-destination" value="${destination}" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-${id}" type="text" name="event-destination" value="${name}" list="destination-list-1">
                     <datalist id="destination-list-${id}">
                       ${destinationsElement}
                     </datalist>
@@ -90,10 +83,10 @@ export function createFormTemplate({event, offers, types, destinations}, hasDesc
 
                   <div class="event__field-group  event__field-group--time">
                     <label class="visually-hidden" for="event-start-time-${id}">From</label>
-                    <input class="event__input  event__input--time" id="event-start-time-${id}" type="text" name="event-start-time" value="${humanizeDateAndTime(event.dateFrom)}">
+                    <input class="event__input  event__input--time" id="event-start-time-${id}" type="text" name="event-start-time" value="${humanizeDateAndTime(dateFrom)}">
                     &mdash;
                     <label class="visually-hidden" for="event-end-time-${id}">To</label>
-                    <input class="event__input  event__input--time" id="event-end-time-${id}" type="text" name="event-end-time" value="${humanizeDateAndTime(event.dateTo)}">
+                    <input class="event__input  event__input--time" id="event-end-time-${id}" type="text" name="event-end-time" value="${humanizeDateAndTime(dateTo)}">
                   </div>
 
                   <div class="event__field-group  event__field-group--price">
@@ -105,12 +98,12 @@ export function createFormTemplate({event, offers, types, destinations}, hasDesc
                   </div>
 
                   <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-                  <button class="event__reset-btn" type="reset">${resetButtonText}</button>
+                  <button class="event__reset-btn" type="reset">Cancel</button>
                 </header>
                 <section class="event__details">
                   ${offersElement}
 
-                  ${showDescription ?
+                  ${hasDescriptionBlock ?
     `<section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
                       ${descriptionElement}

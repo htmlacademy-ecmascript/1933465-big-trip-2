@@ -1,4 +1,4 @@
-import {getOffers, getOffersByType} from '../mock/offers';
+import { getOffers } from '../mock/offers';
 
 export default class OffersModel {
   offers = getOffers();
@@ -8,7 +8,11 @@ export default class OffersModel {
   }
 
   getOffersByType(type) {
-    return getOffersByType(type);
+    return this.offers.find((offer) => offer.type === type).offers;
+  }
+
+  getOfferByTypeAndId(type, id) {
+    return this.getOffersByType(type).find((offer) => offer.id === id);
   }
 
   getOffers() {

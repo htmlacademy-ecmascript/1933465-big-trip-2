@@ -3,12 +3,14 @@ import { createEventTemplate } from './event-template.js';
 
 export default class EventView {
 
-  constructor({event}) {
-    this.event = event;
+  constructor({point, destination, offers}) {
+    this.point = point;
+    this.destination = destination;
+    this.offers = offers;
   }
 
   getTemplate() {
-    return createEventTemplate(this.event);
+    return createEventTemplate(this.point, this.destination, this.offers);
   }
 
   getElement() {
