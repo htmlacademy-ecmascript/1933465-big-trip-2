@@ -1,5 +1,5 @@
 import EventView from '../view/event-view/event-view.js';
-import { render } from '../render.js';
+import { render } from '../framework/render.js';
 
 export default class EventPresenter {
 
@@ -12,13 +12,18 @@ export default class EventPresenter {
   }
 
   init() {
+    this.destination = this.destinationsModel.getDestinationById(this.point.destination);
+    this.offers = this.point.offers.map((offer) => this.offersModel.getOfferByTypeAndId(this.point.type, offer));
     this.render();
   }
 
   render() {
-    const destination = this.destinationsModel.getDestinationById(this.point.destination);
-    const offers = this.point.offers.map((offer) => this.offersModel.getOfferByTypeAndId(this.point.type, offer));
-    render(new EventView({ point: this.point, destination, offers }), this.eventContainer);
+    render(new EventView(
+      {
+        point: this.point,
+        destination: this.destination,
+        offers: this.offers
+      }), this.eventContainer);
   }
 }
 

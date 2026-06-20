@@ -1,8 +1,10 @@
 import TripEventsListView from '../view/trip-events-list-view/trip-events-list-view.js';
 import SortView from '../view/sort-view/sort-view.js';
-import editFormView from '../view/edit-form-view/edit-form-view.js';
-import { render } from '../render.js';
+import EditFormView from '../view/edit-form-view/edit-form-view.js';
+import AddFormView from '../view/add-form-view/add-form-view.js';
+import { render } from '../framework/render.js';
 import EventPresenter from './event-presenter.js';
+import { BLANK_DESTINATION, BLANK_POINT, TYPES } from '../utils/constants.js';
 
 export default class EventsPresenter {
   eventsListComponent = new TripEventsListView();
@@ -15,10 +17,11 @@ export default class EventsPresenter {
   }
 
   init() {
-    this.points = [...this.pointsModel.getPoints()];
-    this.blankPoint = this.pointsModel.getBlankPoint();
-    this.types = this.offersModel.getTypes();
-    this.destinations = this.destinationsModel.getDestinations();
+    this.points = [...this.pointsModel.points];
+    this.blankPoint = BLANK_POINT;
+    this.blankDestination = BLANK_DESTINATION;
+    this.types = TYPES;
+    this.destinations = this.destinationsModel.destinations;
     this.render();
   }
 
@@ -26,7 +29,7 @@ export default class EventsPresenter {
     const destination = this.destinationsModel.getDestinationById(point.destination);
     const offers = point.offers.map((offer) => this.offersModel.getOfferByTypeAndId(point.type, offer));
     const allOffers = this.offersModel.getOffersByType(point.type);
-    render(new editFormView(
+    render(new EditFormView(
       {
         point: point,
         destination: destination,
@@ -37,14 +40,13 @@ export default class EventsPresenter {
       }), container);
   }
 
-  renderAddForm(point, container) {
-    const destination = this.destinationsModel.getBlankDestination();
+  renderAddForm(container) {
     const offers = [];
-    const allOffers = this.offersModel.getOffersByType(point.type);
-    render(new editFormView(
+    const allOffers = this.offersModel.getOffersByType(this.blankPoint.type);
+    render(new AddFormView(
       {
-        point: point,
-        destination: destination,
+        point: this.blankPoint,
+        destination: this.blankDestination,
         offers: offers,
         types: this.types,
         allOffers: allOffers,
@@ -55,10 +57,10 @@ export default class EventsPresenter {
   render() {
     render(new SortView(), this.eventsContainer);
     render(this.eventsListComponent, this.eventsContainer);
-    this.renderEditForm(this.points[0], this.eventsListComponent.getElement());
+    this.renderEditForm(this.points[0], this.eventsListComponent.element);
     for (let i = 1; i < this.points.length; i++) {
       const eventPresenter = new EventPresenter({
-        eventContainer: this.eventsListComponent.getElement(),
+        eventContainer: this.eventsListComponent.element,
         point: this.points[i],
         pointsModel: this.pointsModel,
         offersModel: this.offersModel,
@@ -66,6 +68,6 @@ export default class EventsPresenter {
       });
       eventPresenter.init();
     }
-    this.renderAddForm(this.blankPoint, this.eventsListComponent.getElement());
+    this.renderAddForm(this.eventsListComponent.element);
   }
 }

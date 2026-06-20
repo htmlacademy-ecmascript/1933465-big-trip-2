@@ -1,9 +1,10 @@
-import { createElement } from '../../render.js';
-import { createEditFormTemplate } from './edit-form-template.js';
+import { createAddFormTemplate } from './add-form-template.js';
+import AbstractView from '../../framework/view/abstract-view.js';
 
-export default class EditFormView {
+export default class AddFormView extends AbstractView {
 
   constructor({ point, destination, offers, types, allOffers, destinations }) {
+    super();
     this.point = point;
     this.destination = destination;
     this.offers = offers;
@@ -12,8 +13,8 @@ export default class EditFormView {
     this.destinations = destinations;
   }
 
-  getTemplate() {
-    return createEditFormTemplate(
+  get template() {
+    return createAddFormTemplate(
       {
         point: this.point,
         destination: this.destination,
@@ -22,16 +23,5 @@ export default class EditFormView {
         allOffers: this.allOffers,
         destinations: this.destinations
       });
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }

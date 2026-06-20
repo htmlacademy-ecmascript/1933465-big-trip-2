@@ -1,10 +1,10 @@
 import { getOffers } from '../mock/offers';
 
 export default class OffersModel {
-  offers = getOffers();
+  #offers = [];
 
-  getTypes() {
-    return this.offers.map((offer) => offer.type);
+  init() {
+    this.offers = getOffers();
   }
 
   getOffersByType(type) {
@@ -15,7 +15,11 @@ export default class OffersModel {
     return this.getOffersByType(type).find((offer) => offer.id === id);
   }
 
-  getOffers() {
-    return this.offers;
+  get offers() {
+    return this.#offers;
+  }
+
+  set offers(offers) {
+    this.#offers = offers;
   }
 }

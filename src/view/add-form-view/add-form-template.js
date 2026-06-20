@@ -43,7 +43,7 @@ function createPointTypeTemplate(type, id) {
                         </div>`;
 }
 
-export function createEditFormTemplate({point, destination, offers, allOffers, types, destinations}) {
+export function createAddFormTemplate({point, destination, offers, allOffers, types, destinations}) {
   const { type, basePrice, id, dateTo, dateFrom } = point;
   const { name, pictures, description } = destination;
   const offersElement = createOffersTemplate(offers, allOffers, id);

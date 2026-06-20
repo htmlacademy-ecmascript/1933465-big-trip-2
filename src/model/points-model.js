@@ -1,27 +1,19 @@
-import { getRandomPoints} from '../mock/points.js';
-import dayjs from 'dayjs';
+import { getRandomPoints } from '../mock/points.js';
 
 const POINTS_COUNT = 4;
 
 export default class PointsModel {
-  points = getRandomPoints(POINTS_COUNT);
+  #points = [];
 
-  blankPoint = {
-    id: '',
-    basePrice: '',
-    dateFrom: dayjs(),
-    dateTo: dayjs(),
-    destination: '',
-    isFavorite: false,
-    offers: [],
-    type: 'flight'
-  };
-
-  getPoints() {
-    return this.points;
+  init() {
+    this.points = getRandomPoints(POINTS_COUNT);
   }
 
-  getBlankPoint(){
-    return this.blankPoint;
+  get points() {
+    return this.#points;
+  }
+
+  set points(points) {
+    this.#points = points;
   }
 }
