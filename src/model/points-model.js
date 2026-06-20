@@ -6,14 +6,10 @@ export default class PointsModel {
   #points = [];
 
   init() {
-    this.points = getRandomPoints(POINTS_COUNT);
+    this.#points = getRandomPoints(POINTS_COUNT);
   }
 
   get points() {
     return this.#points;
-  }
-
-  set points(points) {
-    this.#points = points;
   }
 }

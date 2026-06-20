@@ -4,11 +4,11 @@ export default class OffersModel {
   #offers = [];
 
   init() {
-    this.offers = getOffers();
+    this.#offers = getOffers();
   }
 
   getOffersByType(type) {
-    return this.offers.find((offer) => offer.type === type).offers;
+    return this.#offers.find((offer) => offer.type === type).offers;
   }
 
   getOfferByTypeAndId(type, id) {
@@ -17,9 +17,5 @@ export default class OffersModel {
 
   get offers() {
     return this.#offers;
-  }
-
-  set offers(offers) {
-    this.#offers = offers;
   }
 }

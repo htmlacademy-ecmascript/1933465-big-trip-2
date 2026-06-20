@@ -1,3 +1,3 @@
 export function createTripEventsListTemplate() {
-  return '<ul class="trip-events__list"></ul>';
+  return '<li class="trip-events__item"></li>';
 }
