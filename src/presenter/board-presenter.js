@@ -1,9 +1,9 @@
 import TripEventsListView from '../view/trip-events-list-view/trip-events-list-view.js';
 import SortView from '../view/sort-view/sort-view.js';
-// import EditFormView from '../view/edit-form-view/edit-form-view.js';
 import AddFormView from '../view/add-form-view/add-form-view.js';
 import { render } from '../framework/render.js';
 import EventPresenter from './event-presenter.js';
+import NoEventsView from '../view/no-events-view/no-events-view.js';
 import { BLANK_DESTINATION, BLANK_POINT, TYPES } from '../utils/constants.js';
 
 export default class BoardPresenter {
@@ -19,12 +19,14 @@ export default class BoardPresenter {
   #blankDestination = null;
   #types = [];
   #destinations = [];
+  #sort = null;
 
-  constructor({ boardContainer, pointsModel, offersModel, destinationsModel }) {
+  constructor({ boardContainer, pointsModel, offersModel, destinationsModel, sort }) {
     this.#boardContainer = boardContainer;
     this.#pointsModel = pointsModel;
     this.#offersModel = offersModel;
     this.#destinationsModel = destinationsModel;
+    this.#sort = sort;
   }
 
   init() {
@@ -36,21 +38,6 @@ export default class BoardPresenter {
     this.#destinations = this.#destinationsModel.destinations;
     this.#render();
   }
-
-  // #renderEditForm(point, container) {
-  //   const destination = this.#destinationsModel.getDestinationById(point.destination);
-  //   const offers = point.offers.map((offer) => this.#offersModel.getOfferByTypeAndId(point.type, offer));
-  //   const allOffers = this.#offersModel.getOffersByType(point.type);
-  //   render(new EditFormView(
-  //     {
-  //       point: point,
-  //       destination: destination,
-  //       offers: offers,
-  //       types: this.#types,
-  //       allOffers: allOffers,
-  //       destinations: this.#destinations
-  //     }), container);
-  // }
 
   #renderAddForm(container) {
     const offers = [];
@@ -67,9 +54,12 @@ export default class BoardPresenter {
   }
 
   #render() {
-    render(new SortView(), this.#boardContainer);
+    render(new SortView(this.#sort), this.#boardContainer);
+    if(this.#points.length === 0) {
+      render(new NoEventsView('EVERYTHING'), this.#boardContainer);
+      return;
+    }
     render(this.#boardComponent, this.#boardContainer);
-    // this.#renderEditForm(this.#points[0], this.#boardComponent.element);
     for (let i = 0; i < this.#points.length; i++) {
       const eventPresenter = new EventPresenter({
         eventContainer: this.#boardComponent.element,

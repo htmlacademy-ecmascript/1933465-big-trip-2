@@ -2,8 +2,8 @@ const mockEvents = [
   {
     id: 'c9858a89-615b-439a-a859-9e0c38dc4560',
     basePrice: 831,
-    dateFrom: '2026-08-04T01:08:04.671Z',
-    dateTo: '2026-08-05T22:54:04.671Z',
+    dateFrom: '2026-06-04T01:08:04.671Z',
+    dateTo: '2026-06-05T22:54:04.671Z',
     destination: '2722cc2f-6ca3-4dfc-93ae-720f430d6aa9',
     isFavorite: false,
     offers: [],
@@ -12,8 +12,8 @@ const mockEvents = [
   {
     id: 'c992c938-f675-4e59-a5d9-ec00ba537a4b',
     basePrice: 1341,
-    dateFrom: '2026-08-06T13:42:04.671Z',
-    dateTo: '2026-08-08T03:56:04.671Z',
+    dateFrom: '2026-06-06T13:42:04.671Z',
+    dateTo: '2026-06-08T03:56:04.671Z',
     destination: 'a7bb1bf7-36ae-4ee3-94d3-c49ca86c9bdd',
     isFavorite: true,
     offers: [
@@ -24,8 +24,8 @@ const mockEvents = [
   {
     id: '7d88371c-60c8-4d21-8b31-fe17f0105f0c',
     basePrice: 1299,
-    dateFrom: '2026-08-10T00:11:04.671Z',
-    dateTo: '2026-08-11T04:07:04.671Z',
+    dateFrom: '2026-06-10T00:11:04.671Z',
+    dateTo: '2026-06-11T04:07:04.671Z',
     destination: '1f286277-3be6-4b0a-a0fc-f5963e979dd6',
     isFavorite: true,
     offers: [
@@ -38,8 +38,8 @@ const mockEvents = [
   {
     id: '774afe7c-0f0c-4ad8-a154-873d8184777a',
     basePrice: 549,
-    dateFrom: '2026-08-12T10:31:04.671Z',
-    dateTo: '2026-08-13T10:24:04.671Z',
+    dateFrom: '2026-06-12T10:31:04.671Z',
+    dateTo: '2026-06-13T10:24:04.671Z',
     destination: '2722cc2f-6ca3-4dfc-93ae-720f430d6aa9',
     isFavorite: false,
     offers: [],
@@ -48,8 +48,8 @@ const mockEvents = [
   {
     id: '5126ff11-37e2-4983-a020-19b6f6c99711',
     basePrice: 1844,
-    dateFrom: '2026-08-13T20:39:04.671Z',
-    dateTo: '2026-08-14T07:20:04.671Z',
+    dateFrom: '2026-06-13T20:39:04.671Z',
+    dateTo: '2026-06-14T07:20:04.671Z',
     destination: '8d837b27-44b0-4166-bd32-a494671d22af',
     isFavorite: false,
     offers: [],
@@ -58,8 +58,8 @@ const mockEvents = [
   {
     id: '440aa61d-8f19-453c-bddc-1b2a482ce8b4',
     basePrice: 4021,
-    dateFrom: '2026-08-14T22:00:04.671Z',
-    dateTo: '2026-08-16T15:26:04.671Z',
+    dateFrom: '2026-06-14T22:00:04.671Z',
+    dateTo: '2026-06-16T15:26:04.671Z',
     destination: '2722cc2f-6ca3-4dfc-93ae-720f430d6aa9',
     isFavorite: false,
     offers: [
@@ -71,8 +71,8 @@ const mockEvents = [
   {
     id: '0233975a-e0ab-4ceb-a513-edaf9ec716a5',
     basePrice: 8778,
-    dateFrom: '2026-08-18T15:50:04.671Z',
-    dateTo: '2026-08-20T03:27:04.671Z',
+    dateFrom: '2026-06-18T15:50:04.671Z',
+    dateTo: '2026-06-20T03:27:04.671Z',
     destination: '2722cc2f-6ca3-4dfc-93ae-720f430d6aa9',
     isFavorite: false,
     offers: [],

@@ -41,7 +41,7 @@ export default class EventPresenter {
         point: this.#point,
         destination: this.#destination,
         offers: this.#offers,
-        onRollupClick: this.#onEventRollupClick
+        onRollupClick: this.#eventRollupClickHandler
       }
     );
     this.#editFormView = new EditFormView(
@@ -52,35 +52,34 @@ export default class EventPresenter {
         types: this.#types,
         allOffers: this.#allOffers,
         destinations: this.#destinations,
-        onFormSubmit: this.#onFormSubmit,
-        onRollupClick: this.#onEditRollupClick
+        onFormSubmit: this.#formSubmitHandler,
+        onRollupClick: this.#editRollupClickHandler
       });
     this.#render();
   }
 
-  #onEventRollupClick = () => {
+  #eventRollupClickHandler = () => {
     replace(this.#editFormView, this.#eventView);
-    window.addEventListener('keydown', this.#onEscapeKeydown);
+    window.addEventListener('keydown', this.#escapeKeydownHandler);
   };
 
-  #onEditRollupClick = () => {
-    this.#onFormClose();
+  #editRollupClickHandler = () => {
+    this.#closeForm();
   };
 
-  #onFormClose = () => {
+  #closeForm = () => {
     replace(this.#eventView, this.#editFormView);
-    window.removeEventListener('keydown', this.#onEscapeKeydown);
+    window.removeEventListener('keydown', this.#escapeKeydownHandler);
   };
 
-  #onEscapeKeydown = (evt) => {
+  #escapeKeydownHandler = (evt) => {
     if (evt.key === 'Escape') {
-      this.#onFormClose();
+      this.#closeForm();
     }
   };
 
-
-  #onFormSubmit = () => {
-    this.#onFormClose();
+  #formSubmitHandler = () => {
+    this.#closeForm();
   };
 
   #render() {
