@@ -1,4 +1,4 @@
-const mockEvents = [
+const mockPoints = [
   {
     id: 'c9858a89-615b-439a-a859-9e0c38dc4560',
     basePrice: 831,
@@ -312,6 +312,6 @@ const mockEvents = [
 ];
 
 export const getRandomPoints = (count) => {
-  const randomIndex = Math.floor(Math.random() * (mockEvents.length - count));
-  return mockEvents.slice(randomIndex, randomIndex + count);
+  const randomIndex = Math.floor(Math.random() * (mockPoints.length - count));
+  return mockPoints.slice(randomIndex, randomIndex + count);
 };

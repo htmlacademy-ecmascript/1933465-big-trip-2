@@ -8,7 +8,7 @@ import { generateFilter } from './mock/filter.js';
 import { generateSort } from './mock/sort.js';
 
 const siteFiltersElement = document.querySelector('.trip-controls__filters');
-const siteEventsElement = document.querySelector('.trip-events');
+const siteBoardElement = document.querySelector('.trip-events');
 
 const pointsModel = new PointsModel();
 pointsModel.init();
@@ -20,7 +20,7 @@ const filters = generateFilter(pointsModel.points);
 const sort = generateSort(pointsModel.points);
 render(new FilterView({ filters}), siteFiltersElement);
 const boardPresenter = new BoardPresenter({
-  boardContainer: siteEventsElement,
+  boardContainer: siteBoardElement,
   pointsModel: pointsModel,
   offersModel: offersModel,
   destinationsModel: destinationsModel,
