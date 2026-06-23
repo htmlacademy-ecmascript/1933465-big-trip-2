@@ -1,37 +1,33 @@
-import { createElement } from '../../render.js';
-import { createEditFormTemplate } from './edit-form-template.js';
+import { createAddFormTemplate } from './add-form-template.js';
+import AbstractView from '../../framework/view/abstract-view.js';
 
-export default class EditFormView {
+export default class AddFormView extends AbstractView {
+  #point = null;
+  #destination = null;
+  #offers = null;
+  #types = [];
+  #allOffers = [];
+  #destinations = [];
 
   constructor({ point, destination, offers, types, allOffers, destinations }) {
-    this.point = point;
-    this.destination = destination;
-    this.offers = offers;
-    this.types = types;
-    this.allOffers = allOffers;
-    this.destinations = destinations;
+    super();
+    this.#point = point;
+    this.#destination = destination;
+    this.#offers = offers;
+    this.#types = types;
+    this.#allOffers = allOffers;
+    this.#destinations = destinations;
   }
 
-  getTemplate() {
-    return createEditFormTemplate(
+  get template() {
+    return createAddFormTemplate(
       {
-        point: this.point,
-        destination: this.destination,
-        offers: this.offers,
-        types: this.types,
-        allOffers: this.allOffers,
-        destinations: this.destinations
+        point: this.#point,
+        destination: this.#destination,
+        offers: this.#offers,
+        types: this.#types,
+        allOffers: this.#allOffers,
+        destinations: this.#destinations
       });
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }

@@ -1,37 +1,49 @@
-import { createElement } from '../../render.js';
 import { createEditFormTemplate } from './edit-form-template.js';
+import AbstractView from '../../framework/view/abstract-view.js';
 
-export default class EditFormView {
+export default class EditFormView extends AbstractView {
+  #point = null;
+  #destination = null;
+  #offers = null;
+  #types = [];
+  #allOffers = [];
+  #destinations = [];
+  #handleFormSubmit = null;
+  #handleRollupClick = null;
 
-  constructor({ point, destination, offers, types, allOffers, destinations }) {
-    this.point = point;
-    this.destination = destination;
-    this.offers = offers;
-    this.types = types;
-    this.allOffers = allOffers;
-    this.destinations = destinations;
+  constructor({ point, destination, offers, types, allOffers, destinations, onFormSubmit, onRollupClick }) {
+    super();
+    this.#point = point;
+    this.#destination = destination;
+    this.#offers = offers;
+    this.#types = types;
+    this.#allOffers = allOffers;
+    this.#destinations = destinations;
+    this.#handleFormSubmit = onFormSubmit;
+    this.element.addEventListener('submit', this.#formSubmitHandler);
+    this.#handleRollupClick = onRollupClick;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#rollupClickHandler);
   }
 
-  getTemplate() {
+  get template() {
     return createEditFormTemplate(
       {
-        point: this.point,
-        destination: this.destination,
-        offers: this.offers,
-        types: this.types,
-        allOffers: this.allOffers,
-        destinations: this.destinations
+        point: this.#point,
+        destination: this.#destination,
+        offers: this.#offers,
+        types: this.#types,
+        allOffers: this.#allOffers,
+        destinations: this.#destinations
       });
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
+  #rollupClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleRollupClick();
+  };
 
-  removeElement() {
-    this.element = null;
-  }
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleFormSubmit();
+  };
 }
