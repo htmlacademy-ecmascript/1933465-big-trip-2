@@ -2,7 +2,6 @@ import EventView from '../view/event-view/event-view.js';
 import EditFormView from '../view/edit-form-view/edit-form-view.js';
 import { render, replace } from '../framework/render.js';
 import { TYPES } from '../utils/constants.js';
-import TripEventsItemView from '../view/trip-events-item-view/trip-events-item-view.js';
 
 export default class EventPresenter {
 
@@ -10,7 +9,6 @@ export default class EventPresenter {
   #editFormView = null;
   #eventContainer = null;
   #eventComponent = null;
-  #pointsModel = null;
   #offersModel = null;
   #destinationsModel = null;
 
@@ -21,21 +19,18 @@ export default class EventPresenter {
   #types = [];
   #destinations = [];
 
-  constructor({ eventContainer, point, pointsModel, offersModel, destinationsModel }) {
+  constructor({ eventContainer, point, offersModel, destinationsModel }) {
     this.#eventContainer = eventContainer;
     this.#point = point;
-    this.#pointsModel = pointsModel;
     this.#offersModel = offersModel;
     this.#destinationsModel = destinationsModel;
     this.#destination = this.#destinationsModel.getDestinationById(this.#point.destination);
     this.#offers = this.#point.offers.map((offer) => this.#offersModel.getOfferByTypeAndId(this.#point.type, offer));
     this.#allOffers = this.#offersModel.getOffersByType(this.#point.type);
-    this.#types = TYPES;
     this.#destinations = this.#destinationsModel.destinations;
   }
 
   init() {
-    this.#eventComponent = new TripEventsItemView();
     this.#eventView = new EventView(
       {
         point: this.#point,
@@ -49,7 +44,7 @@ export default class EventPresenter {
         point: this.#point,
         destination: this.#destination,
         offers: this.#offers,
-        types: this.#types,
+        types: TYPES,
         allOffers: this.#allOffers,
         destinations: this.#destinations,
         onFormSubmit: this.#formSubmitHandler,
@@ -83,8 +78,7 @@ export default class EventPresenter {
   };
 
   #render() {
-    render(this.#eventComponent, this.#eventContainer);
-    render(this.#eventView, this.#eventComponent.element);
+    render(this.#eventView, this.#eventContainer);
   }
 }
 

@@ -53,7 +53,8 @@ export function createEditFormTemplate({ point, destination, offers, allOffers, 
   const pointTypesElement = types.map((innerType) => createPointTypeTemplate(innerType)).join('');
   const destinationsElement = destinations.map((innerDestination) => `<option value="${innerDestination.name}"></option>`).join('');
 
-  return `<form class="event event--edit" action="#" method="post">
+  return `<li class="trip-events__item">
+          <form class="event event--edit" action="#" method="post">
             <header class="event__header">
               <div class="event__type-wrapper">
                 <label class="event__type  event__type-btn" for="event-type-toggle-${id}">
@@ -112,5 +113,6 @@ export function createEditFormTemplate({ point, destination, offers, allOffers, 
                     ${picturesElement}
                   </section>` : ''}
                 </section >
-              </form>`;
+              </form>
+            </li>`;
 }
