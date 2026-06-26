@@ -13,7 +13,8 @@ export function createEventTemplate(point, destination, offers) {
   const { type, basePrice, isFavorite, dateFrom, dateTo } = point;
   const favoriteClass = isFavorite ? 'event__favorite-btn--active' : '';
   const offersElement = offers.length ? `<ul class="event__selected-offers">${offers.map(createOfferTemplate).join('')}</ul>` : '';
-  return `<div class="event">
+  return `<li class="trip-events__item">
+          <div class="event">
             <time class="event__date" datetime="2019-03-18">${humanizeDate(dateFrom)}</time>
             <div class="event__type">
               <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
@@ -41,5 +42,6 @@ export function createEventTemplate(point, destination, offers) {
             <button class="event__rollup-btn" type="button">
               <span class="visually-hidden">Open event</span>
             </button>
-          </div>`;
+          </div>
+        </li>`;
 }

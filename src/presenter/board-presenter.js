@@ -4,7 +4,7 @@ import AddFormView from '../view/add-form-view/add-form-view.js';
 import { render } from '../framework/render.js';
 import EventPresenter from './event-presenter.js';
 import NoEventsView from '../view/no-events-view/no-events-view.js';
-import { BLANK_DESTINATION, BLANK_POINT, TYPES } from '../utils/constants.js';
+import { BLANK_DESTINATION, BLANK_POINT, TYPES, Messages } from '../utils/constants.js';
 
 export default class BoardPresenter {
   #boardContainer = null;
@@ -56,7 +56,7 @@ export default class BoardPresenter {
   #render() {
     render(new SortView(this.#sort), this.#boardContainer);
     if(this.#points.length === 0) {
-      render(new NoEventsView('EVERYTHING'), this.#boardContainer);
+      render(new NoEventsView(Messages.EVERYTHING), this.#boardContainer);
       return;
     }
     render(this.#boardComponent, this.#boardContainer);
