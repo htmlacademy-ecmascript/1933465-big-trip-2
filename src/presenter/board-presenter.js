@@ -76,7 +76,7 @@ export default class BoardPresenter {
     }
     this.#points = Sorts[sortType]([...this.#sourcedPoints]);
     this.#currentSortType = sortType;
-    this.#clearTaskList();
+    this.#clearEventsList();
     this.#renderEventsList();
   };
 
@@ -104,7 +104,7 @@ export default class BoardPresenter {
     this.#renderEventsList();
   }
 
-  #clearTaskList() {
+  #clearEventsList() {
     this.#eventPresenters.forEach((presenter) => presenter.destroy());
     this.#eventPresenters.clear();
   }
