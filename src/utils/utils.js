@@ -25,4 +25,8 @@ function getTimeBetween(dateFrom, dateTo) {
   return hStr + mStr;
 }
 
-export {humanizeDate, humanizeTime, humanizeDateAndTime, getTimeBetween};
+function updateItem(items, update) {
+  return items.map((item) => item.id === update.id ? update : item);
+}
+
+export { updateItem ,humanizeDate, humanizeTime, humanizeDateAndTime, getTimeBetween};
