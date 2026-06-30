@@ -80,7 +80,7 @@ export default class EventPresenter {
     remove(prevEditFormComponent);
   }
 
-  #destroy() {
+  destroy() {
     remove(this.#eventComponent);
     remove(this.#editFormComponent);
   }

@@ -4,8 +4,9 @@ import AddFormView from '../view/add-form-view/add-form-view.js';
 import { render, RenderPosition } from '../framework/render.js';
 import EventPresenter from './event-presenter.js';
 import NoEventsView from '../view/no-events-view/no-events-view.js';
-import { BLANK_DESTINATION, BLANK_POINT, TYPES, Messages } from '../utils/constants.js';
+import { BLANK_DESTINATION, BLANK_POINT, TYPES, Messages, SortType } from '../utils/constants.js';
 import { updateItem } from '../utils/utils.js';
+import { Sorts } from '../utils/sort.js';
 
 export default class BoardPresenter {
   #boardContainer = null;
@@ -17,11 +18,13 @@ export default class BoardPresenter {
   #destinationsModel = null;
 
   #points = [];
+  #sourcedPoints = [];
   #blankPoint = null;
   #blankDestination = null;
   #types = [];
   #destinations = [];
   #sort = null;
+  #currentSortType = SortType.DEFAULT;
   #eventPresenters = new Map();
 
   constructor({ boardContainer, pointsModel, offersModel, destinationsModel, sort }) {
@@ -33,9 +36,9 @@ export default class BoardPresenter {
   }
 
   init() {
-    this.#sortComponent = new SortView(this.#sort);
     this.#noEventsComponent = new NoEventsView(Messages.EVERYTHING);
     this.#points = [...this.#pointsModel.points];
+    this.#sourcedPoints = [...this.#pointsModel.points];
     this.#blankPoint = BLANK_POINT;
     this.#blankDestination = BLANK_DESTINATION;
     this.#types = TYPES;
@@ -67,7 +70,22 @@ export default class BoardPresenter {
     // this.#renderAddForm(this.#boardComponent.element);
   }
 
+  #handleSortChange = (sortType) => {
+    if(this.#currentSortType === sortType) {
+      return;
+    }
+    this.#points = Sorts[sortType]([...this.#sourcedPoints]);
+    this.#currentSortType = sortType;
+    this.#clearTaskList();
+    this.#renderEventsList();
+  };
+
+  #sortPoints(sortType) {
+    this.#points = Sorts[sortType](this.#sourcedPoints);
+  }
+
   #renderSort() {
+    this.#sortComponent = new SortView({ sort: this.#sort, onSortTypeChange: this.#handleSortChange });
     render(this.#sortComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
   }
 
@@ -91,9 +109,10 @@ export default class BoardPresenter {
     this.#eventPresenters.clear();
   }
 
-  #handleEventChange = (updatedEvent) =>{
-    this.#points = updateItem(this.#points, updatedEvent);
-    this.#eventPresenters.get(updatedEvent.id).init(updatedEvent);
+  #handleEventChange = (updatedPoint) => {
+    this.#points = updateItem(this.#points, updatedPoint);
+    this.#sourcedPoints = updateItem(this.#sourcedPoints, updatedPoint);
+    this.#eventPresenters.get(updatedPoint.id).init(updatedPoint);
   };
 
   #handleModeChange = () => {
